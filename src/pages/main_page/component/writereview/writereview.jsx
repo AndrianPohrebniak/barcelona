@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styles from "./writereview.module.css";
 
 const Svg_star = ({ id, color, handleClick }) => {
@@ -21,15 +22,52 @@ const Svg_star = ({ id, color, handleClick }) => {
   );
 };
 
-const review = () => {
+const review = (marker_id) => {
+  const [showComponent, setShowComponent] = useState(true);
+
   const [selectedObject, setSelectedObject] = useState(null);
+  const [textReview, setReviewText] = useState('');
+
+  const handleReviewChange = (event) => {
+    setReviewText(event.target.value);
+  };
+
+
+  const addMarker = (event) => {
+    const authorization = 'Bearer ' + window.localStorage.getItem('jsonwebtoken')
+
+    let data = JSON.stringify({
+      "review": textReview,
+      "rating": selectedObject,
+      "markerId": marker_id.marker_id.marker_id,
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: '/api/v1/review/addReview',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authorization
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        setShowComponent(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   const handleClick = (objectIndex) => {
     setSelectedObject(objectIndex);
     console.log(objectIndex);
   };
-
-  const [showComponent, setShowComponent] = useState(true);
 
   const handleHeaderClick = () => {
     setShowComponent(false);
@@ -72,13 +110,15 @@ const review = () => {
             <form>
               <textarea
                 className={styles.review_field}
+                value={textReview}
+                onChange={handleReviewChange}
                 rows="4"
                 cols="50"
-              ></textarea>
+              />
             </form>
           </div>
           <div className={styles.button_box}>
-            <button>Send</button>
+            <button onClick={addMarker}>Send</button>
           </div>
         </div>
       )}

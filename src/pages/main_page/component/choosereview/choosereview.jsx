@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
 import styles from "./choosereview.module.css";
 import WriteReview from "../writereview/writereview.jsx";
+import View_review from "../viewreview/viewreview.jsx";
 
-const review = () => {
+const review = (marker_id) => {
   const [writeReview, openWriteReview] = useState([]);
+  const [viewReview, opeViewReview] = useState([]);
 
-  const addParagraph = () => {
-    const newParagraphs = [...writeReview, <WriteReview key={1}/>];
+  const addWriteReview = () => {
+    const newParagraphs = [...writeReview, <WriteReview marker_id={marker_id} key={1}/>];
     openWriteReview(newParagraphs);
+    handleHeaderClick();
+  };
+
+  const addViewReview = () => {
+    const newParagraphs = [...viewReview, <View_review marker_id={marker_id} key={1}/>];
+    opeViewReview(newParagraphs);
     handleHeaderClick();
   };
 
@@ -39,12 +47,13 @@ const review = () => {
             <div className={styles.text}>Choose what you want to do</div>
           </div>
           <div className={styles.button_box}>
-            <button onClick={addParagraph}>Write a review</button>
-            <button>View reviews</button>
+            <button onClick={addWriteReview}>Write a review</button>
+            <button onClick={addViewReview}>View reviews</button>
           </div>
         </div>
       )}
       {writeReview}
+      {viewReview}
     </>
   );
 };

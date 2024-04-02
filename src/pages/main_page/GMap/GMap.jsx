@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  GoogleMap,
-  useJsApiLoader,
-  Marker,
-  InfoWindowF,
-} from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader, Marker, InfoWindowF, } from "@react-google-maps/api";
 import styles from "./GMap.module.css";
 import style_categories from "./MarkerCategory.module.css";
 import NavS from "../component/nav/nav.jsx";
@@ -25,17 +20,19 @@ const center = {
 };
 
 function MapToilet({ center }) {
-  const [showDiv, setShowDiv] = useState(true);
-
-  const handleDeleteDiv = () => {
-    setShowDiv(false);
-  };
-
   const [markers, setMarkers] = useState([]);
   const [newCenter, setNewCenter] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
-  const [map, setMap] = React.useState(null);
-  const [activeMarker, setActiveMarker] = React.useState(null);
+  const [map, setMap] = useState(null);
+  const [activeMarker, setActiveMarker] = useState(null);
+  const [chooseReview, setChooseReview] = useState(null);
+
+  const openChooseReview = () => {
+    const newParagraphs = [chooseReview, <ChooseReview marker_id={1} key={1} />];
+    setChooseReview(newParagraphs);
+    setActiveMarker(null);
+  };
+
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -134,7 +131,7 @@ function MapToilet({ center }) {
       }}
     >
       <NavS onGeolocationClick={setNewCenter} />
-      <VievReview />
+      {/* <VievReview /> */}
 
       {userLocation && (
         <Marker
@@ -149,7 +146,6 @@ function MapToilet({ center }) {
       {markers.map(
         ({ id, name, coordinates, averageRating, destination, tags }) => {
           destination = { distance: "666", time: "15" };
-          // console.log("Marker Data:", { id, name, coordinates, rating, destination, tags }); // Додаємо логування
           return (
             <Marker
               key={id}
@@ -163,6 +159,7 @@ function MapToilet({ center }) {
                     : { width: 35, height: 35 },
               }}
             >
+              {chooseReview}
               {activeMarker === id ? (
                 <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
                   <div className={styles.marker_info}>
@@ -171,9 +168,8 @@ function MapToilet({ center }) {
                         {tags.map((tag, index) => (
                           <div
                             key={index}
-                            className={`${
-                              style_categories.marker_info_category_item
-                            } ${style_categories[tag.name.toLowerCase()]}`}
+                            className={`${style_categories.marker_info_category_item
+                              } ${style_categories[tag.name.toLowerCase()]}`}
                           >
                             {tag.name}
                           </div>
@@ -182,7 +178,7 @@ function MapToilet({ center }) {
 
                       <div className={styles.marker_info_reviews}>
                         <a
-                          href="/add_review"
+                          onClick={openChooseReview}
                           target="_self"
                           rel="noopener noreferrer"
                           style={{
