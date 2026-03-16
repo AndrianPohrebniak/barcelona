@@ -1,5 +1,16 @@
+.container_main {
+    position: absolute;
+    height: 300px;
+    width: 280px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    padding: 10px;
+}
+
 .container{
-    position: relative;
+    position: absolute;
     height: 200px;
     width: 280px;
     background-color: #ffffff;
@@ -8,7 +19,7 @@
     transform: translate(-50%, -50%);
     border-radius: 20px;
     padding: 10px;
-    box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1); /* Гарна тінь */
+    box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Вихід і зірочки*/
@@ -89,4 +100,49 @@ button {
 button:active {
     transform: scale(1.05); 
 }
+
+/*-----------------*/
+
+/*Помилка*/
+
+/* .error_box {
+    position: absolute;
+    height: 70px;
+    width: 280px;
+    background-color: #F9CFCB;
+    border: 2px solid #ff8176;
+    top:  35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1);
+} */
+
+.error_box {
+    padding: 20px;
+    position: absolute;
+    height: 70px;
+    width: 280px;
+    background-color: #F9CFCB;
+    border: 2px solid #ff8176;
+    top: 0%;
+    left: 50%;
+    border-radius: 20px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.main_cross_icon {
+    margin-right: 5px;
+    width: 50px; 
+    height: 50px;
+}
+
 /*-----------------*/

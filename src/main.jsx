@@ -4,12 +4,21 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Sign_in from './pages/sign_in/sign_in'
 import Sign_up from './pages/sign_up/sign_up'
 import Main_page from './pages/main_page/main_page'
-import Search from './pages/search/search'
-import Add_marker from './pages/add_marker/add_marker'
+import Search from './pages/searchandfilter/search/search1'
+import Add_marker from './pages/add_marker/addmarker_one'
 import NotFound from './pages/notfound/notfound'
 import Loading from './pages/loading'
 import Review from './pages/add_review/add_review'
+import GPS from './pages/main_page/GPS/GPS'
+import Settings from './pages/settings/settings'
+// import Testpage from './pages/test_page/testpage'
 import './index.css'
+import Success from './pages/success/success'
+import Success_sign_up from './pages/success/success_sign_up'
+import Admin_menu from './pages/admin_menu/admin_menu'
+import axios from 'axios'
+
+axios.defaults.baseURL = 'https://toilet-tracker-backend-3uru.onrender.com'
 
 const router = createBrowserRouter([
   {
@@ -45,6 +54,36 @@ const router = createBrowserRouter([
   {
     path: '/loading',
     element: <Loading/>,
+    errorElement: <NotFound/>,
+  },
+  {
+    path: '/read_coords',
+    element: <GPS/>,
+    errorElement: <NotFound/>,
+  },
+  {
+    path: '/settings',
+    element: <Settings/>,
+    errorElement: <NotFound/>,
+  },
+  // {
+  //   path: '/test',
+  //   element: <Testpage/>,
+  //   errorElement: <NotFound/>,
+  // },
+  {
+    path: '/success',
+    element: <Success/>,
+    errorElement: <NotFound/>,
+  },
+  {
+    path: '/success/sign_up',
+    element: <Success_sign_up/>,
+    errorElement: <NotFound/>,
+  },
+  {
+    path: '/admin_menu',
+    element: <Admin_menu/>,
     errorElement: <NotFound/>,
   },
 ])

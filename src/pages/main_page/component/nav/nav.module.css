@@ -1,4 +1,5 @@
 .nav_down {
+    padding-top: 10px;
     max-width: 500px;
     width: 100%;
     height: 100px;
@@ -47,9 +48,17 @@
     justify-content: space-around;
 }
 
+.nav_down_icon {
+    margin: 0px;
+}
+
 a {
-    text-decoration: none; /* Вимкнути підкреслення */
-    color: inherit; /* Зберегти колір тексту від батьківського елемента */
+    text-decoration: none;
+    color: inherit;
     margin: 0;
     padding: 0;
+}
+
+.nav_down_name {
+    margin: 0;
 }
