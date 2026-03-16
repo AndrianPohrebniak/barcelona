@@ -32,11 +32,14 @@ const addmarker_two = (props) => {
         }
         const authorization = 'Bearer ' + window.localStorage.getItem('jsonwebtoken')
 
+        const lat = parseFloat(addCoords.split(", ")[0]);
+        const lng = parseFloat(addCoords.split(", ")[1]);
+
         let data = JSON.stringify({
             "name": addName,
             "address": "Unknown",
-            "latitude": addCoords.lat,
-            "longitude": addCoords.lng,
+            "latitude": lat,
+            "longitude": lng,
             "status": checkboxValues[0] || "PUBLIC"
         });
 
