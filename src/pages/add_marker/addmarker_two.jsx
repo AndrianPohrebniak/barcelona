@@ -35,12 +35,19 @@ const addmarker_two = (props) => {
         const lat = parseFloat(addCoords.split(", ")[0]);
         const lng = parseFloat(addCoords.split(", ")[1]);
 
+        // Map frontend tags to backend RestroomStatus enum
+        let mappedStatus = "OPEN_NOW"; // default
+        if (checkboxValues.includes("RESTRICTED_ACCESS")) { mappedStatus = "RESTRICTED_ACCESS"; }
+        else if (checkboxValues.includes("TEMPORARILY_CLOSED")) { mappedStatus = "TEMPORARILY_CLOSED"; }
+        else if (checkboxValues.includes("CLOSES_SOON")) { mappedStatus = "CLOSES_SOON"; }
+        else if (checkboxValues.includes("OPEN_NOW")) { mappedStatus = "OPEN_NOW"; }
+
         let data = JSON.stringify({
             "name": addName,
             "address": "Unknown",
             "latitude": lat,
             "longitude": lng,
-            "status": checkboxValues[0] || "PUBLIC"
+            "status": mappedStatus
         });
 
         let config = {
@@ -109,6 +116,22 @@ const addmarker_two = (props) => {
                                 <p>Supermarker</p>
                             </div>
                         </label><br />
+                                <label>
+                                    <input type="checkbox" value="OPEN_NOW" onChange={handleCheckboxChange} />
+                                    OPEN NOW
+                                </label><br />
+                                <label>
+                                    <input type="checkbox" value="CLOSES_SOON" onChange={handleCheckboxChange} />
+                                    CLOSES SOON
+                                </label><br />
+                                <label>
+                                    <input type="checkbox" value="RESTRICTED_ACCESS" onChange={handleCheckboxChange} />
+                                    RESTRICTED ACCESS
+                                </label><br />
+                                <label>
+                                    <input type="checkbox" value="TEMPORARILY_CLOSED" onChange={handleCheckboxChange} />
+                                    TEMPORARILY CLOSED
+                                </label><br />
                         <label className={styles.toilet_tag}>
                             <input className={styles.checkbox} onChange={handleCheckboxChange} type="checkbox" value="CAFFE" />
                             <div className={styles.checkbox_checked}>

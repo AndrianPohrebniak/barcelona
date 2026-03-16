@@ -42,12 +42,19 @@ const add_marker_page = () => {
     const lat = parseFloat(addCoords.split(", ")[0]);
     const lng = parseFloat(addCoords.split(", ")[1]);
 
+    // Map frontend tags to backend RestroomStatus enum
+    let mappedStatus = "OPEN_NOW"; // default
+    if (checkboxValues.includes("RESTRICTED_ACCESS")) { mappedStatus = "RESTRICTED_ACCESS"; }
+    else if (checkboxValues.includes("TEMPORARILY_CLOSED")) { mappedStatus = "TEMPORARILY_CLOSED"; }
+    else if (checkboxValues.includes("CLOSES_SOON")) { mappedStatus = "CLOSES_SOON"; }
+    else if (checkboxValues.includes("OPEN_NOW")) { mappedStatus = "OPEN_NOW"; }
+
     let data = JSON.stringify({
       "name": addName,
       "address": "Unknown",
       "latitude": lat,
       "longitude": lng,
-      "status": checkboxValues[0] || "PUBLIC"
+      "status": mappedStatus
     });
 
     let config = {
@@ -142,32 +149,20 @@ const add_marker_page = () => {
 
         </GoogleMap>
         <label>
-          <input type="checkbox" value="CAFFE" onChange={handleCheckboxChange} />
-          CAFFE
+          <input type="checkbox" value="OPEN_NOW" onChange={handleCheckboxChange} />
+          OPEN NOW
         </label><br />
         <label>
-          <input type="checkbox" value="SUPERMARKET" onChange={handleCheckboxChange} />
-          SUPERMARKET
+          <input type="checkbox" value="CLOSES_SOON" onChange={handleCheckboxChange} />
+          CLOSES SOON
         </label><br />
         <label>
-          <input type="checkbox" value="RESTAURANT" onChange={handleCheckboxChange} />
-          RESTAURANT
+          <input type="checkbox" value="RESTRICTED_ACCESS" onChange={handleCheckboxChange} />
+          RESTRICTED ACCESS
         </label><br />
         <label>
-          <input type="checkbox" value="PUBLIC" onChange={handleCheckboxChange} />
-          PUBLIC
-        </label><br />
-        <label>
-          <input type="checkbox" value="FREE" onChange={handleCheckboxChange} />
-          FREE
-        </label><br />
-        <label>
-          <input type="checkbox" value="PAID" onChange={handleCheckboxChange} />
-          PAID
-        </label><br />
-        <label>
-          <input type="checkbox" value="STORE" onChange={handleCheckboxChange} />
-          STORE
+          <input type="checkbox" value="TEMPORARILY_CLOSED" onChange={handleCheckboxChange} />
+          TEMPORARILY CLOSED
         </label><br />
         <h3>Ви вибрали:</h3>
         <ul>
