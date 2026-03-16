@@ -71,10 +71,17 @@ const Search = () => {
 
     useEffect(() => {
         axios
-            .get("/api/v1/markers/findAll")
+            .get("/api/v1/restrooms/")
             .then((res) => {
-                setMarkers(res.data);
-                console.log(res.data);
+                const mappedData = res.data.map(obj => ({
+                    id: obj.id,
+                    name: obj.name,
+                    coordinates: { lat: obj.latitude, lng: obj.longitude },
+                    averageRating: obj.rating || 0,
+                    tags: [{ name: obj.status || "PUBLIC" }]
+                }));
+                setMarkers(mappedData);
+                console.log(mappedData);
             })
             .catch((err) => {
                 console.log(err);
@@ -89,8 +96,10 @@ const Search = () => {
         ) {
             return;
         }
-        let [lat, lng] = obj.coordinates.split(", ");
-        obj.coordinates = { lat: parseFloat(lat), lng: parseFloat(lng) };
+        if (typeof obj.coordinates === 'string') {
+            let [lat, lng] = obj.coordinates.split(", ");
+            obj.coordinates = { lat: parseFloat(lat), lng: parseFloat(lng) };
+        }
     });
 
     const onLoad = React.useCallback(
@@ -117,7 +126,16 @@ const Search = () => {
     const [checkboxValues, setCheckboxValues] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/v1/markers/tags')
+        const hardcodedTags = [
+            { id: 1, name: "RESTAURANT" },
+            { id: 2, name: "SUPERMARKET" },
+            { id: 3, name: "CAFFE" },
+            { id: 4, name: "PUBLIC" },
+            { id: 5, name: "FREE" },
+            { id: 6, name: "PAID" },
+            { id: 7, name: "STORE" }
+        ];
+        Promise.resolve({ data: hardcodedTags })
             .then(res => {
                 setTags(res.data);
             })

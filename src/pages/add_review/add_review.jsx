@@ -22,15 +22,14 @@ const addReview = () => {
         const authorization = 'Bearer ' + window.localStorage.getItem('jsonwebtoken')
 
         let data = JSON.stringify({
-            "review": textReview,
-            "rating": rating,
-            "markerId": markerID,
+            "value": parseFloat(rating),
+            "restroomId": parseInt(markerID)
         });
 
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: '/api/v1/review/addReview',
+            url: '/api/v1/ratings/rating',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': authorization

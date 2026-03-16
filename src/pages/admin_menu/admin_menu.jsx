@@ -12,24 +12,8 @@ export default class AdminMenu extends Component {
     }
 
     componentDidMount() {
-        const authorization = 'Bearer ' + window.localStorage.getItem('jsonwebtoken');
-        let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: '/api/v1/markers/findAllEqualsFalse',
-            headers: {
-                'Authorization': authorization
-            }
-        };
-
-        axios.request(config)
-            .then((response) => {
-                this.setState({ markers: response.data });
-                console.log(this.state.markers);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        // Backend no longer supports findAllEqualsFalse for admin
+        this.setState({ markers: [] });
     }
 
     render() {

@@ -33,7 +33,7 @@ class Sign_in extends Component {
       password: this.state.password
     })
       .then(response => {
-        const token = response.data.token
+        const token = response.data.jwt
         console.log(token)
         localStorage.setItem('jsonwebtoken', token)
         window.location.href = "/";

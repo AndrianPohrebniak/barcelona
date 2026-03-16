@@ -17,47 +17,30 @@ class settings extends Component {
     }
 
     checkRegister = () => {
-        let data = '';
-        const url = '/api/v1/validate/valid/' + window.localStorage.getItem('jsonwebtoken')
-
+        const authorization = 'Bearer ' + window.localStorage.getItem('jsonwebtoken');
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: url,
-            headers: {},
-            data: data
+            url: '/api/v1/users/user',
+            headers: {
+                'Authorization': authorization
+            }
         };
 
         axios.request(config)
             .then((response) => {
-                this.setState({ registered: response.data });
+                this.setState({ registered: true });
                 console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
+                this.setState({ registered: false });
             });
     }
 
     checkAdmin = () => {
-        let data = '';
-        const url = '/api/v1/validate/checkAdmin/' + window.localStorage.getItem('jsonwebtoken')
-
-        let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: url,
-            headers: {},
-            data: data
-        };
-
-        axios.request(config)
-            .then((response) => {
-                this.setState({ admin: response.data });
-                console.log(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        // Backend no longer supports checkAdmin endpoint
+        this.setState({ admin: false });
     }
 
     logOut = () => {

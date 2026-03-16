@@ -34,14 +34,16 @@ const addmarker_two = (props) => {
 
         let data = JSON.stringify({
             "name": addName,
-            "coordinates": addCoords,
-            "tags": checkboxValues
+            "address": "Unknown",
+            "latitude": addCoords.lat,
+            "longitude": addCoords.lng,
+            "status": checkboxValues[0] || "PUBLIC"
         });
 
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: '/api/v1/markers/create',
+            url: '/api/v1/restrooms/restroom',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': authorization

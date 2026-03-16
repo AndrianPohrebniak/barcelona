@@ -125,10 +125,17 @@ function MapToilet({ center }) {
 
     useEffect(() => {
         axios
-            .get("/api/v1/markers/findAll")
+            .get("/api/v1/restrooms/")
             .then((res) => {
-                setMarkers(res.data);
-                console.log(res.data);
+                const mappedData = res.data.map(obj => ({
+                    id: obj.id,
+                    name: obj.name,
+                    coordinates: { lat: obj.latitude, lng: obj.longitude },
+                    averageRating: obj.rating || 0,
+                    tags: [{ name: obj.status || "PUBLIC" }]
+                }));
+                setMarkers(mappedData);
+                console.log(mappedData);
             })
             .catch((err) => {
                 console.log(err);
@@ -163,8 +170,10 @@ function MapToilet({ center }) {
                 time: time.toFixed(0) // Округлення до двох знаків після коми
             };
         } else {
-            let [lat, lng] = obj.coordinates.split(", ");
-            obj.coordinates = { lat: parseFloat(lat), lng: parseFloat(lng) };
+            if (typeof obj.coordinates === 'string') {
+                let [lat, lng] = obj.coordinates.split(", ");
+                obj.coordinates = { lat: parseFloat(lat), lng: parseFloat(lng) };
+            }
             obj.destination = { distance: "0", time: "0" };
         }
     });
