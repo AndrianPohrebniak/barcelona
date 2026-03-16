@@ -7,7 +7,8 @@ class Sign_up extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
+      name: 'BARCELONA',
+      email: '',
       password: '',
       visible: false,
       response_error: ""
@@ -30,7 +31,11 @@ class Sign_up extends Component {
   submitHandler = e => {
     e.preventDefault()
     console.log(this.state)
-    axios.post('/api/v1/accounts/register', this.state)
+    axios.post('/api/v1/users/signup', {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password
+    })
       .then(response => {
         window.location.href = "/success/sign_up";
       })
@@ -48,7 +53,7 @@ class Sign_up extends Component {
   }
 
   render() {
-    const { username, password, visible } = this.state
+    const { email, password, visible } = this.state
     return (
       <div className={styles.conteiner}>
         <a href="/" target="_self" rel="noopener noreferrer">
@@ -69,7 +74,7 @@ class Sign_up extends Component {
           }
 
           <div className={styles.main_box_email}>
-            <input className={styles.main_input_email} type="text" name="username" value={username} onChange={this.changeHandler} required />
+            <input className={styles.main_input_email} type="text" name="email" value={email} onChange={this.changeHandler} required />
             <div className={styles.main_input_email_placeholder}>Enter your email</div>
           </div>
           <div className={styles.main_box_password}>

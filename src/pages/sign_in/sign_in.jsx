@@ -28,7 +28,7 @@ class Sign_in extends Component {
   submitHandler = e => {
     e.preventDefault()
     console.log(this.state)
-    axios.post('/api/v1/authentication/login', this.state)
+    axios.post('/api/v1/users/auth', this.state)
       .then(response => {
         const token = response.data.token
         console.log(token)
